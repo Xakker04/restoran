@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant - Menu</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    header nav a { margin: 15px; text-decoration: none; font-weight: bold; }
+    .dish {
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      padding: 15px;
+    }
+    .dish img {
+      width: 100%;
+      max-width: 300px;
+      display: block;
+      margin-bottom: 10px;
+    }
+    .controls button { margin: 0 5px; }
+    #receipt { display: none; margin-top: 20px; background: #eee; padding: 10px; }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="home.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <h2>Our Menu</h2>
+
+  <div class="dish" data-name="Pizza" data-price="10">
+    <img src="pizza.jpg" alt="Pizza">
+    <h3>Pizza</h3>
+    <p>Ingredients: cheese, tomato, pepperoni</p>
+    <p>Price: $10</p>
+    <div class="controls">
+      <button onclick="updateQuantity(this, -1)">-</button>
+      <span class="quantity">0</span>
+      <button onclick="updateQuantity(this, 1)">+</button>
+    </div>
+  </div>
+
+  <div class="dish" data-name="Pasta" data-price="8">
+    <img src="pasta.jpg" alt="Pasta">
+    <h3>Pasta</h3>
+    <p>Ingredients: pasta, cheese, sauce</p>
+    <p>Price: $8</p>
+    <div class="controls">
+      <button onclick="updateQuantity(this, -1)">-</button>
+      <span class="quantity">0</span>
+      <button onclick="updateQuantity(this, 1)">+</button>
+    </div>
+  </div>
+
+  <button onclick="showReceipt()">Order</button>
+
+  <div id="receipt"></div>
+
+  <script>
+    function updateQuantity(btn, change) {
+      const quantitySpan = btn.parentElement.querySelector('.quantity');
+      let qty = parseInt(quantitySpan.textContent) + change;
+      if (qty < 0) qty = 0;
+      quantitySpan.textContent = qty;
+    }
+
+    function showReceipt() {
+      const dishes = document.querySelectorAll('.dish');
+      let receipt = '<h3>Receipt</h3>';
+      let total = 0;
+
+      dishes.forEach(dish => {
+        const qty = parseInt(dish.querySelector('.quantity').textContent);
+        if (qty > 0) {
+          const name = dish.dataset.name;
+          const price = parseFloat(dish.dataset.price);
+          total += price * qty;
+          receipt += `<p>${name} x${qty} = $${price * qty}</p>`;
+        }
+      });
+
+      receipt += `<p><strong>Total: $${total}</strong></p>`;
+      document.getElementById('receipt').innerHTML = receipt;
+      document.getElementById('receipt').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
