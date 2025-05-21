@@ -2,8 +2,8 @@
   document.getElementById("contact-form").addEventListener("submit", function(e) {
     e.preventDefault(); // Form yuborilishini to‘xtatadi
 
-    const botToken = "7738371221:AAHRfroC7NQaWuetFP3WhnQND7OkwkmJKbk";
-    const chatId = "5875127442";
+    const botToken = "";
+    const chatId = "";
 
     // Form ma'lumotlarini olish
     const name = this.name.value;
